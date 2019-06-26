@@ -1,3 +1,10 @@
-org.springframework.context.ApplicationListener=com.xpinjection.springboot.init.ActiveProfilesChecker,com.xpinjection.springboot.init.HttpServerPortLogger
-org.springframework.boot.diagnostics.FailureAnalyzer=com.xpinjection.springboot.init.ActiveProfileMissedFailureAnalyzer
-org.springframework.boot.env.EnvironmentPostProcessor=com.xpinjection.springboot.init.DevEnvironmentConfigurer
+org.springframework.context.ApplicationListener=\
+  com.xpinjection.springboot.init.ActiveProfilesChecker,\
+  com.xpinjection.springboot.init.HttpServerPortLogger
+org.springframework.boot.diagnostics.FailureAnalyzer=\
+  com.xpinjection.springboot.init.ActiveProfileMissedFailureAnalyzer
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.xpinjection.springboot.init.DevEnvironmentConfigurer
+# AutoConfigurationDemo setup
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+#  com.xpinjection.springboot.autoconfiguration.AutoConfigurationDemo
