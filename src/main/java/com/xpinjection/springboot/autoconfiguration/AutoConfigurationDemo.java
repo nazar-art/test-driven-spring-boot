@@ -24,8 +24,8 @@ import java.io.File;
  */
 @Configuration
 @AllArgsConstructor
-@ConditionalOnClass({FFmpegFrameGrabber.class, AnimatedGifEncoder.class})
 @EnableConfigurationProperties(JustGifItProperties.class)
+@ConditionalOnClass({FFmpegFrameGrabber.class, AnimatedGifEncoder.class})
 public class AutoConfigurationDemo {
 
 //    @Value("${multipart.location}/gif/")
@@ -60,6 +60,7 @@ public class AutoConfigurationDemo {
     public ConverterService converterService() {
         return new ConverterService();
     }
+
 
     @Configuration
     @ConditionalOnWebApplication
