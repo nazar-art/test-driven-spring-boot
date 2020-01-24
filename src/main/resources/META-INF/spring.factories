@@ -3,3 +3,7 @@ org.springframework.context.ApplicationListener=com.xpinjection.springboot.init.
 org.springframework.boot.diagnostics.FailureAnalyzer=com.xpinjection.springboot.init.ActiveProfileMissedFailureAnalyzer
 
 org.springframework.boot.env.EnvironmentPostProcessor=com.xpinjection.springboot.init.DevEnvironmentConfigurer
+
+# AutoConfigurationDemo setup
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+#  com.xpinjection.springboot.autoconfiguration.AutoConfigurationDemo
