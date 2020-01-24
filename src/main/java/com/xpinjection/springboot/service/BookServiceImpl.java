@@ -44,7 +44,8 @@ public class BookServiceImpl implements BookService {
 
     private String normalizeAuthorName(String author) {
         String authorName = StringUtils.normalizeSpace(author);
-        return isSingleWord(authorName) ? splitOnFirstAndLastNames(authorName) : authorName;
+//        return isSingleWord(authorName) ? splitOnFirstAndLastNames(authorName) : authorName;
+        return isSingleWord(authorName) ? authorName : splitOnFirstAndLastNames(authorName);
     }
 
     private boolean isSingleWord(String correctAuthor) {
