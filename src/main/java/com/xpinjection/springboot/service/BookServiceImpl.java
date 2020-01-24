@@ -43,9 +43,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findBooksByAuthor(String author) {
         Assert.hasText(author, "Author is empty!");
+
         String normalizedAuthor = normalizeAuthorName(author);
 
-//        log.info("FIND BOOK BY AUTHOR: {}", normalizedAuthor);
         return cache.computeIfAbsent(normalizedAuthor, bookDao::findByAuthor);
     }
 
