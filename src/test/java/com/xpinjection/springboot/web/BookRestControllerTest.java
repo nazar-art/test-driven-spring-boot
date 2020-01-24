@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -40,7 +40,8 @@ public class BookRestControllerTest {
     @Test
     public void booksAreReturnedForAuthor() throws Exception {
         when(bookService.findBooksByAuthor("A")).thenReturn(books);
-        mockMvc.perform(get("/books?author=A").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/books?author=A")
+                .accept(MediaType.APPLICATION_JSON))
         				.andExpect(status().isOk())
         				.andExpect(content().contentType("application/json;charset=UTF-8"))
         				.andExpect(jsonPath("$[0].name").value("First"))

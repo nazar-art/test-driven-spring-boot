@@ -36,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(BookController.class)
 @ActiveProfiles("test")
 public class BookControllerIntegrationTest {
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -46,7 +45,7 @@ public class BookControllerIntegrationTest {
     private BookService bookService;
 
     private List<Book> books = asList(new Book("First", "author"),
-                                      new Book("Second", "another author"));
+            new Book("Second", "another author"));
 
     @Before
     public void init() {

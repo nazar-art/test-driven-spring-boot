@@ -4,11 +4,12 @@ import com.xpinjection.springboot.init.LibrarySettings;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
 @EnableConfigurationProperties(LibrarySettings.class)
 public class LibraryApplication extends SpringBootServletInitializer {
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return configureApplication(builder);
