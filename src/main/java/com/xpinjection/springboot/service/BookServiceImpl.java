@@ -2,6 +2,7 @@ package com.xpinjection.springboot.service;
 
 import com.xpinjection.springboot.dao.BookDao;
 import com.xpinjection.springboot.domain.Book;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,15 @@ import static java.util.stream.Collectors.toList;
 /**
  * @author Alimenkou Mikalai
  */
+@Slf4j
 @Service
 @Transactional
 public class BookServiceImpl implements BookService {
-    private final BookDao bookDao;
+
     private final ConcurrentMap<String, List<Book>> cache = new ConcurrentHashMap<>();
+
+    private final BookDao bookDao;
+
 
     public BookServiceImpl(BookDao bookDao) {
         this.bookDao = bookDao;
@@ -39,13 +44,20 @@ public class BookServiceImpl implements BookService {
     public List<Book> findBooksByAuthor(String author) {
         Assert.hasText(author, "Author is empty!");
         String normalizedAuthor = normalizeAuthorName(author);
+
+//        log.info("FIND BOOK BY AUTHOR: {}", normalizedAuthor);
         return cache.computeIfAbsent(normalizedAuthor, bookDao::findByAuthor);
     }
 
+    @Override
+    public List<Book> findAllBooks() {
+        return bookDao.findAll();
+    }
+
+
     private String normalizeAuthorName(String author) {
         String authorName = StringUtils.normalizeSpace(author);
-//        return isSingleWord(authorName) ? splitOnFirstAndLastNames(authorName) : authorName;
-        return isSingleWord(authorName) ? authorName : splitOnFirstAndLastNames(authorName);
+        return isSingleWord(authorName) ? splitOnFirstAndLastNames(authorName) : authorName;
     }
 
     private boolean isSingleWord(String correctAuthor) {
@@ -62,8 +74,4 @@ public class BookServiceImpl implements BookService {
         return String.join(" ", firstName, lastName);
     }
 
-    @Override
-    public List<Book> findAllBooks() {
-        return bookDao.findAll();
-    }
 }

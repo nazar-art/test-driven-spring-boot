@@ -3,13 +3,12 @@ package com.xpinjection.springboot;
 import com.xpinjection.springboot.init.LibrarySettings;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration;
-import org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-@SpringBootApplication(exclude = {JmxAutoConfiguration.class, WebSocketAutoConfiguration.class})
 @EnableConfigurationProperties(LibrarySettings.class)
+@SpringBootApplication(exclude = {JmxAutoConfiguration.class})
 public class LibraryApplication extends SpringBootServletInitializer {
 
 	@Override

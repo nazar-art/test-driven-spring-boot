@@ -113,6 +113,9 @@ public class BookServiceImplTest {
         assertBooksByAuthor(" \t Mikalai \n Alimenkou \t ", book);
     }
 
+    /**
+     * Utilities assertions methods
+     */
     private void assertBooksByAuthor(String author, Book book) {
         assertThat(bookService.findBooksByAuthor(author), hasItem(book));
     }
