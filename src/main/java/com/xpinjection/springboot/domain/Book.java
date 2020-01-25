@@ -11,11 +11,12 @@ import javax.persistence.Id;
  * @author Alimenkou Mikalai
  */
 @Entity
+@ToString
 @Getter @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-@ToString
 public class Book {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -1,7 +1,8 @@
-package com.xpinjection.springboot.service;
+package com.xpinjection.springboot.service.impl;
 
 import com.xpinjection.springboot.dao.BookDao;
 import com.xpinjection.springboot.domain.Book;
+import com.xpinjection.springboot.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

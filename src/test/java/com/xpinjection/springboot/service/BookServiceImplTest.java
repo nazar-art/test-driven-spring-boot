@@ -2,6 +2,7 @@ package com.xpinjection.springboot.service;
 
 import com.xpinjection.springboot.dao.BookDao;
 import com.xpinjection.springboot.domain.Book;
+import com.xpinjection.springboot.service.impl.BookServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

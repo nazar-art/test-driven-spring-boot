@@ -12,6 +12,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 
 public class BookEndpointApiTest extends AbstractEndpointApiTest {
+
     @Test
     @DataSet(value = "default-books.xml", executorId = "system", strategy = SeedStrategy.INSERT)
     public void allBooksFromDatabaseAreAvailableOnWeb() throws Exception {

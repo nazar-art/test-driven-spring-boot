@@ -12,10 +12,13 @@ import static java.util.Arrays.asList;
 
 @Data
 public class Expert {
+
     @NotBlank
     private final String name;
+
     @NotBlank
     private final String contact;
+
     @NotEmpty
     private Set<Recommendation> recommendations = new HashSet<>();
 

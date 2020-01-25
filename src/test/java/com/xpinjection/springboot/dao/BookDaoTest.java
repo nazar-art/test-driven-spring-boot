@@ -21,6 +21,7 @@ import static org.junit.Assert.assertThat;
  * @author Alimenkou Mikalai
  */
 public class BookDaoTest extends AbstractDaoTest<BookDao> {
+
     @Test
     public void ifThereIsNoBookWithSuchNameEmptyOptionalIsReturned() {
         assertThat(dao.findByName("unknown"), is(equalTo(Optional.empty())));
@@ -100,7 +101,8 @@ public class BookDaoTest extends AbstractDaoTest<BookDao> {
                     .columns("id", "name", "author")
                     .values(2, "First", "Author")
                     .values(3, "Second", "Author")
-                    .values(4, "Second", "Another author").build();
+                    .values(4, "Second", "Another author")
+                    .build();
         }
     }
 

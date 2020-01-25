@@ -14,9 +14,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.sql.DataSource;
 
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
 public abstract class AbstractEndpointApiTest {
 
     @Autowired

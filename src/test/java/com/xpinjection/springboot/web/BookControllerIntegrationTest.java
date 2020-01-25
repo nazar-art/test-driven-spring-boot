@@ -32,10 +32,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Alimenkou Mikalai
  */
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @WebMvcTest(BookController.class)
-@ActiveProfiles("test")
 public class BookControllerIntegrationTest {
+
     @Autowired
     private MockMvc mockMvc;
 

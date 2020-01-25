@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DBUnit(mergeDataSets = true)
 public class ExpertDaoTest extends AbstractDaoTest<ExpertDao> {
+
     @Test
     @DataSet(executeStatementsBefore = "ALTER TABLE expert ALTER COLUMN id RESTART WITH 1",
             value = "stored-books.xml", cleanBefore = true,

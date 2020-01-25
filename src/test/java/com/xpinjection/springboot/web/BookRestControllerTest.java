@@ -23,12 +23,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BookRestControllerTest {
+
     @Mock
     private BookService bookService;
 
     private MockMvc mockMvc;
 
-    private List<Book> books = asList(new Book("First", "A"), new Book("Second", "A"));
+    private List<Book> books = asList(
+            new Book("First", "A"),
+            new Book("Second", "A")
+    );
 
     @Before
     public void init() {
