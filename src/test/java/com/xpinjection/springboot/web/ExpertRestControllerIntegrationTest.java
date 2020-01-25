@@ -39,6 +39,7 @@ public class ExpertRestControllerIntegrationTest {
     public void expertCouldBeAddedWithRecommendations() throws Exception {
         Expert expert = new Expert("Mikalai", "+38099023546");
         expert.addRecommendations(new Recommendation("Effective Java by Josh Bloch"));
+
         when(service.add(refEq(expert))).thenReturn(5L);
 
         addExpert("\"name\": \"Mikalai\"",
@@ -55,6 +56,7 @@ public class ExpertRestControllerIntegrationTest {
     public void ifExpertCouldNotBeStoredReturnBadRequest() throws Exception {
         Expert expert = new Expert("Mikalai", "+38099023546");
         expert.addRecommendations(new Recommendation("Effective Java by Josh Bloch"));
+
         when(service.add(refEq(expert)))
                 .thenThrow(new InvalidRecommendationException("ERROR"));
 

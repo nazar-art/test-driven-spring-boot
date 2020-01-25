@@ -83,6 +83,7 @@ public class BookDaoTest extends AbstractDaoTest<BookDao> {
     public void ifBookAlreadyExistsItMayBeFoundUsingSeveralMethods() {
         Book book = new Book("Existing book", "Unknown");
         book.setId(13L);
+
         assertThat(dao.findAll(), hasItem(samePropertyValuesAs(book)));
         assertThat(dao.findById(13L), samePropertyValuesAs(Optional.of(book)));
         assertThat(dao.getOne(13L), samePropertyValuesAs(book));
@@ -90,9 +91,11 @@ public class BookDaoTest extends AbstractDaoTest<BookDao> {
         assertThat(dao.findByAuthor("Unknown"), hasItem(samePropertyValuesAs(book)));
     }
 
+
     private long addBookToDatabase(String title, String author) {
         return addRecordToDatabase("book", ImmutableMap.of("name", title, "author", author));
     }
+
 
     public static class BooksByNameDataSet implements DataSetProvider {
         @Override

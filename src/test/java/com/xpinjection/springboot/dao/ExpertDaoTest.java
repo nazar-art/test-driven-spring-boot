@@ -17,17 +17,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ExpertDaoTest extends AbstractDaoTest<ExpertDao> {
 
     @Test
+    @Commit
     @DataSet(executeStatementsBefore = "ALTER TABLE expert ALTER COLUMN id RESTART WITH 1",
             value = "stored-books.xml", cleanBefore = true,
             tableOrdering = {"recommendations", "expert", "book"})
     @ExpectedDataSet("expected-stored-expert.xml")
-    @Commit
     public void expertCanBeStored() {
         ExpertEntity expert = new ExpertEntity("Mikalai", "a@b.com");
         Book book = new Book("Existing book", "Unknown");
         book.setId(13L);
         expert.setRecommendations(newHashSet(book));
+
         ExpertEntity saved = dao.save(expert);
+
         assertThat(saved.getId()).isNotNull();
     }
 
@@ -37,7 +39,9 @@ public class ExpertDaoTest extends AbstractDaoTest<ExpertDao> {
         Book book = new Book("Existing book", "Unknown");
         book.setId(17L);
         expert.setRecommendations(newHashSet(book));
+
         dao.save(expert);
+
         TestTransaction.flagForCommit();
         TestTransaction.end();
     }
