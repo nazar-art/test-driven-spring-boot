@@ -1,0 +1,44 @@
+logging.file: "library.log"
+
+library.size: 0
+
+server:
+  servlet.jsp.registered: false
+  port: 8083
+  tomcat:
+    max-connections: 30
+    max-threads: 30
+    basedir: tomcat
+    accesslog:
+      enabled: true
+      pattern: "%t %a '%r' %s (%D ms)"
+  compression:
+    enabled: true
+    min-response-size: 512
+    mime-types: "text/html,text/xml,text/plain,text/css,application/json"
+
+spring:
+#  profiles.active: "dev"
+  freemarker.cache: true
+  jackson:
+    serialization.indent_output: true
+    deserialization.fail-on-unknown-properties: true
+  datasource:
+    initialization-mode: never
+    hikari.maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      use-new-id-generator-mappings: true
+      ddl-auto: none
+
+  liquibase.change-log: "classpath:/db/changelog/changelog.xml"
+
+  application.admin.enabled: true
+
+management:
+  endpoints:
+    web:
+      base-path: "/admin"
+      exposure.include: "*"
+

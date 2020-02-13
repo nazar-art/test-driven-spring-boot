@@ -8,6 +8,7 @@ public class ActiveProfilesChecker implements ApplicationListener<ApplicationPre
     @Override
     public void onApplicationEvent(ApplicationPreparedEvent event) {
         ConfigurableEnvironment environment = event.getApplicationContext().getEnvironment();
+
         if (environment.getActiveProfiles().length == 0) {
             throw new ApplicationStartedWithoutActiveProfileException();
         }

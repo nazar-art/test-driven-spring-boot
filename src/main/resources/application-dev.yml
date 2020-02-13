@@ -1,0 +1,39 @@
+server.port: 8083
+
+debug: true
+
+library:
+  size: ${random.int(2,10)}
+  list: One,Two,Three
+
+# SAMPLES for properties autowiring
+db:
+  connections: "{url:'http://_____', userName: 'foo', password: 'pass'}"
+  host: 127.0.0.1
+  port: 1200
+
+spring:
+  freemarker.cache: false
+  jpa.show-sql: true
+  h2:
+    console:
+      enabled: true
+      settings.web-allow-others: true
+  mvc.favicon.enabled: false
+
+# configure auto-configured AutoConfigurationDemo
+multipart:
+  maxFileSize: 50MB
+  maxRequestSize: 50MB
+  location: ${java.io.tmpdir}
+
+com:
+  justgifit:
+    create-result-dir: true
+    optimize: true
+
+# ACTUATOR settings
+management.endpoints.web.exposure.include: "*"
+
+#endpoints.actuator.sensitive: false
+#management.security.enabled: false

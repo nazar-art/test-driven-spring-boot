@@ -19,7 +19,7 @@ public class DefaultLibraryInitializer implements ApplicationRunner {
     private final LibrarySettings settings;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
         if (args.containsOption("debug")) {
             System.out.println("Application is started in DEBUG mode");
@@ -28,6 +28,11 @@ public class DefaultLibraryInitializer implements ApplicationRunner {
         Map<String, String> books = IntStream.range(1, settings.getSize()).boxed()
                 .collect(toMap(o -> "Book #" + o, o -> "Author #" + o));
         bookService.addBooks(books);
+
         System.out.println("Configured library size is: " + settings.getSize());
+
+//        System.out.printf("DEFAULT_VALUES: %s\n", settings.getDefaultMessage());
+//        System.out.printf("LIST_VALUES: %s\n", settings.getList());
+//        System.out.printf("MAP_VALUES: %s\n", settings.getDbParamsMap());
     }
 }
