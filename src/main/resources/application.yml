@@ -1,9 +1,13 @@
-logging.file: "library.log"
+logging:
+  file: "library.log"
 
-library.size: 0
+library:
+  size: 0
 
 server:
-  servlet.jsp.registered: false
+  servlet:
+    jsp:
+      registered: false
   port: 8083
   tomcat:
     max-connections: 30
@@ -19,10 +23,13 @@ server:
 
 spring:
 #  profiles.active: "dev"
-  freemarker.cache: true
+  freemarker:
+    cache: true
   jackson:
-    serialization.indent_output: true
-    deserialization.fail-on-unknown-properties: true
+    serialization:
+      indent_output: true
+    deserialization:
+      fail-on-unknown-properties: true
   datasource:
     initialization-mode: never
     hikari.maximum-pool-size: 10
@@ -31,10 +38,11 @@ spring:
     hibernate:
       use-new-id-generator-mappings: true
       ddl-auto: none
-
-  liquibase.change-log: "classpath:/db/changelog/changelog.xml"
-
-  application.admin.enabled: true
+  liquibase:
+    change-log: "classpath:/db/changelog/changelog.xml"
+  application:
+    admin:
+      enabled: true
 
 management:
   endpoints:
