@@ -3,12 +3,12 @@ package com.xpinjection.springboot.web;
 import com.xpinjection.springboot.domain.Book;
 import com.xpinjection.springboot.service.BookService;
 import lombok.AllArgsConstructor;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**

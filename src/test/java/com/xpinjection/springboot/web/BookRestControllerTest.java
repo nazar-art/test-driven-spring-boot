@@ -2,12 +2,17 @@ package com.xpinjection.springboot.web;
 
 import com.xpinjection.springboot.domain.Book;
 import com.xpinjection.springboot.service.BookService;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.JUnitRestDocumentation;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -15,8 +20,21 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author Alimenkou Mikalai
@@ -34,10 +52,14 @@ public class BookRestControllerTest {
             new Book("Second", "A")
     );
 
+    @Rule
+    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation();
+
     @Before
     public void init() {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(new BookRestController(bookService))
+                .apply(documentationConfiguration(this.restDocumentation))
                 .build();
     }
 
@@ -46,17 +68,29 @@ public class BookRestControllerTest {
         when(bookService.findBooksByAuthor("A")).thenReturn(books);
         mockMvc.perform(get("/books?author=A")
                 .accept(MediaType.APPLICATION_JSON))
-        				.andExpect(status().isOk())
-        				.andExpect(content().contentType("application/json;charset=UTF-8"))
-        				.andExpect(jsonPath("$[0].name").value("First"))
-        				.andExpect(jsonPath("$[0].author").value("A"))
-        				.andExpect(jsonPath("$[1].name").value("Second"))
-        				.andExpect(jsonPath("$[1].author").value("A"));
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$[0].name").value("First"))
+                .andExpect(jsonPath("$[0].author").value("A"))
+                .andExpect(jsonPath("$[1].name").value("Second"))
+                .andExpect(jsonPath("$[1].author").value("A"))
+                .andDo(document("books search by author",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName("Accept").description("Content-Type")
+                        )
+                ));
     }
 
     @Test
     public void ifAuthorParamIsMissedThrowException() throws Exception {
         mockMvc.perform(get("/books").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andDo(document("books without author param",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(headerWithName("Accept").description("Content-Type")))
+                );
     }
 }

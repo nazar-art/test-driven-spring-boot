@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @WebMvcTest(ExpertRestController.class)
+
 public class ExpertRestControllerIntegrationTest {
 
     @Autowired

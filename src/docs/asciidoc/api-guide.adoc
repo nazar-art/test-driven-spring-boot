@@ -1,0 +1,64 @@
+= Library API
+Nazar Lelyak <nazar.lelyak@gmail.com>
+
+== Book API
+
+=== GET books by author param
+
+==== Request headers
+
+include::{snippets}/books search by author/request-headers.adoc[]
+
+//==== Response fields
+//
+//include::{snippets}/books search by author/response-fields.adoc[]
+
+==== Examples
+
+===== Curl Request GET
+
+include::{snippets}/books search by author/curl-request.adoc[]
+
+===== Httpie Request GET
+
+include::{snippets}/books search by author/httpie-request.adoc[]
+
+===== HTTP Request GET
+
+include::{snippets}/books search by author/http-request.adoc[]
+
+===== HTTP Response GET
+
+include::{snippets}/books search by author/http-response.adoc[]
+
+// ====================================================================
+
+=== GET books without author param
+
+==== Request headers
+
+include::{snippets}/books without author param/request-headers.adoc[]
+
+//==== Response fields
+//
+//include::{snippets}/books without author param/response-body.adoc
+
+==== Examples
+
+===== Curl Request GET
+
+include::{snippets}/books without author param/curl-request.adoc[]
+
+===== Httpie Request GET
+
+include::{snippets}/books without author param/httpie-request.adoc[]
+
+===== HTTP Request GET
+
+include::{snippets}/books without author param/http-request.adoc[]
+
+===== HTTP Response GET
+
+include::{snippets}/books without author param/http-response.adoc[]
+
+// ====================================================================

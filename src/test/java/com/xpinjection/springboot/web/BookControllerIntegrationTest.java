@@ -71,8 +71,9 @@ public class BookControllerIntegrationTest {
     @Test
     public void libraryPageContentIsRenderedAsHtmlWithListOfBooks() throws IOException {
         HtmlPage page = webClient.getPage("http://books.com/library.html");
-        List<String> booksList = page.getElementsByTagName("li")
-                .stream().map(DomNode::asText).collect(toList());
+        List<String> booksList = page.getElementsByTagName("li").stream()
+                .map(DomNode::asText)
+                .collect(toList());
         assertThat(booksList, hasItems("1. First, author", "2. Second, another author"));
     }
 }

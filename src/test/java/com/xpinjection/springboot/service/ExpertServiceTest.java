@@ -8,6 +8,7 @@ import com.xpinjection.springboot.domain.Book;
 import com.xpinjection.springboot.domain.Expert;
 import com.xpinjection.springboot.exception.InvalidRecommendationException;
 import com.xpinjection.springboot.service.impl.ExpertServiceImpl;
+import org.apache.commons.lang3.Validate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,6 +77,7 @@ public class ExpertServiceTest {
         expert.addRecommendations(new Recommendation("Spring in Action"));
         service.add(expert);
     }
+
 
     private void expectExpertIsStored(long id) {
         ExpertEntity savedEntity = new ExpertEntity(entity.getName(), entity.getContact());
