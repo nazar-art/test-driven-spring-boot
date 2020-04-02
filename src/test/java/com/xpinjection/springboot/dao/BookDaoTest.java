@@ -37,8 +37,8 @@ public class BookDaoTest extends AbstractDaoTest<BookDao> {
                 is(samePropertyValuesAs(Optional.of(expected))));
     }
 
-    @Test(expected = IncorrectResultSizeDataAccessException.class)
     @DataSet("books-by-name.xml")
+    @Test(expected = IncorrectResultSizeDataAccessException.class)
     public void ifSeveralBooksFoundByNameThrowException() {
         dao.findByName("Second");
     }
@@ -60,6 +60,7 @@ public class BookDaoTest extends AbstractDaoTest<BookDao> {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     @Sql("/books-for-the-same-author.sql")
     public void severalBooksForTheSameAuthorAreReturned() {
         Book first = new Book("First book", "author");
@@ -70,9 +71,9 @@ public class BookDaoTest extends AbstractDaoTest<BookDao> {
     }
 
     @Test
+    @Commit
     @DataSet("empty.xml")
     @ExpectedDataSet("expected-books.xml")
-    @Commit
     public void booksMayBeStored() {
         Book saved = dao.save(new Book("The First", "Mikalai Alimenkou"));
         assertThat(saved.getId(), is(notNullValue()));
