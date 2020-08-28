@@ -45,15 +45,16 @@ public class BookControllerIntegrationTest {
     @MockBean
     private BookService bookService;
 
-    private List<Book> books = asList(new Book("First", "author"),
+    private final List<Book> books = asList(new Book("First", "author"),
             new Book("Second", "another author"));
 
     @Before
     public void init() {
         when(bookService.findAllBooks()).thenReturn(books);
+
         webClient = MockMvcWebClientBuilder.mockMvcSetup(mockMvc)
                 .useMockMvcForHosts("books.com", "mylibrary.org")
-        		.build();
+                .build();
     }
 
     @Test
@@ -71,6 +72,7 @@ public class BookControllerIntegrationTest {
     @Test
     public void libraryPageContentIsRenderedAsHtmlWithListOfBooks() throws IOException {
         HtmlPage page = webClient.getPage("http://books.com/library.html");
+
         List<String> booksList = page.getElementsByTagName("li").stream()
                 .map(DomNode::asText)
                 .collect(toList());

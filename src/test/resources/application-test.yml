@@ -1,0 +1,15 @@
+spring.application.admin.enabled: false
+
+management:
+  endpoints:
+    web.exposure.exclude: '*'
+    enabled-by-default: false
+
+library.size: 0
+
+debug: true
+
+logging:
+  level:
+    com.github.database.rider: DEBUG
+    org.springframework.test.context.cache: DEBUG

@@ -17,10 +17,11 @@ public class DemoRunner implements CommandLineRunner {
     private final BookService bookService;
 
     @Override
-    public void run(String... strings) throws Exception {
+    public void run(String... strings) {
         Map<String, String> books = new HashMap<>();
         books.put("Spring in Action", "Who knows?");
         books.put("Hibernate in Action", "Who cares?");
         bookService.addBooks(books).forEach(System.out::println);
+        System.out.println("CommandLineRunner called here!");
     }
 }

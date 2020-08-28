@@ -30,6 +30,7 @@ public class DefaultLibraryInitializer implements ApplicationRunner {
         bookService.addBooks(books);
 
         System.out.println("Configured library size is: " + settings.getSize());
+        System.out.println("ApplicationRunner called");
 
 //        System.out.printf("DEFAULT_VALUES: %s\n", settings.getDefaultMessage());
 //        System.out.printf("LIST_VALUES: %s\n", settings.getList());

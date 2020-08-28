@@ -40,7 +40,7 @@ public class BookRestControllerTest {
 
     private MockMvc mockMvc;
 
-    private List<Book> books = asList(
+    private final List<Book> books = asList(
             new Book("First", "A"),
             new Book("Second", "A")
     );
@@ -59,6 +59,7 @@ public class BookRestControllerTest {
     @Test
     public void booksAreReturnedForAuthor() throws Exception {
         when(bookService.findBooksByAuthor("A")).thenReturn(books);
+
         mockMvc.perform(get("/books?author=A")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
