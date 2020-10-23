@@ -36,7 +36,7 @@ public class BookControllerTest {
 
     private MockMvc mockMvc;
 
-    private List<Book> books = asList(new Book("First", "author"),
+    private final List<Book> books = asList(new Book("First", "author"),
             new Book("Second", "another author"));
 
     @Before

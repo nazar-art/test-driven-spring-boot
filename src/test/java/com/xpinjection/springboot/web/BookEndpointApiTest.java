@@ -15,7 +15,7 @@ public class BookEndpointApiTest extends AbstractEndpointApiTest {
 
     @Test
     @DataSet(value = "default-books.xml", executorId = "system", strategy = SeedStrategy.INSERT)
-    public void allBooksFromDatabaseAreAvailableOnWeb() throws Exception {
+    public void allBooksFromDatabaseAreAvailableOnWeb() {
         given()
             .accept("text/html;charset=UTF-8")
         .when()

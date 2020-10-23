@@ -32,8 +32,8 @@ public class ExpertServiceTest {
     @Mock
     private ExpertDao expertDao;
 
-    private Expert expert = new Expert("Mikalai", "a@b.com");
-    private ExpertEntity entity = new ExpertEntity("Mikalai", "a@b.com");
+    private final Expert expert = new Expert("Mikalai", "a@b.com");
+    private final ExpertEntity entity = new ExpertEntity("Mikalai", "a@b.com");
 
     @Before
     public void init() {
