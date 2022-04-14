@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class BookRestController {
+
     private final BookService bookService;
 
     @GetMapping(path = "/books", produces = MediaType.APPLICATION_JSON_VALUE)

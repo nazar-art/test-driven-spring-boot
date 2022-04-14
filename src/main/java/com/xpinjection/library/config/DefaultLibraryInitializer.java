@@ -16,11 +16,12 @@ import static java.util.stream.Collectors.toMap;
 @Component
 @AllArgsConstructor
 public class DefaultLibraryInitializer implements ApplicationRunner {
+
     private final BookService bookService;
     private final LibrarySettings settings;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         if (args.containsOption("debug")) {
             LOG.info("Application is started in DEBUG mode");
         }

@@ -7,6 +7,7 @@ import java.util.Map;
 import static java.util.stream.Collectors.toList;
 
 public class Books {
+
     private final Map<String, String> books;
 
     private Books(Map<String, String> books) {

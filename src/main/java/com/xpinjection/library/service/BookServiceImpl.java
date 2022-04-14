@@ -22,6 +22,7 @@ import static java.util.stream.Collectors.toList;
 @Service
 @Transactional
 public class BookServiceImpl implements BookService {
+
     private final BookDao bookDao;
     private final ConcurrentMap<String, List<Book>> cache = new ConcurrentHashMap<>();
 
@@ -38,6 +39,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Book> findBooksByAuthor(String author) {
         LOG.info("Try to find books by author: {}", author);
         Assert.hasText(author, "Author is empty!");
@@ -65,6 +67,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Book> findAllBooks() {
         LOG.info("Finding all books");
         return bookDao.findAll();

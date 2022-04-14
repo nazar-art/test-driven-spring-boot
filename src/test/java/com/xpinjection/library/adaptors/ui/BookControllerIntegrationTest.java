@@ -33,10 +33,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Alimenkou Mikalai
  */
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(BookController.class)
 @ActiveProfiles("test")
+@WebMvcTest(BookController.class)
+@ExtendWith(SpringExtension.class)
 public class BookControllerIntegrationTest {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -45,8 +46,10 @@ public class BookControllerIntegrationTest {
     @MockBean
     private BookService bookService;
 
-    private List<Book> books = asList(new Book("First", "author"),
-            new Book("Second", "another author"));
+    private final List<Book> books = asList(
+            new Book("First", "author"),
+            new Book("Second", "another author")
+    );
 
     @BeforeEach
     void init() {

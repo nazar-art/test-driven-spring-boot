@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @AllArgsConstructor
 public class BookController {
+
     private final BookService bookService;
 
     @GetMapping("/library.html")

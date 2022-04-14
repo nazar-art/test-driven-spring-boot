@@ -8,10 +8,10 @@ import javax.persistence.*;
  * @author Alimenkou Mikalai
  */
 @Entity
+@ToString
 @Getter @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-@ToString
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_id_seq")

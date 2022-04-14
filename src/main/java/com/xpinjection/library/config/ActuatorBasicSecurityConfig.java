@@ -10,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 @RequiredArgsConstructor
 public class ActuatorBasicSecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final WebEndpointProperties webEndpointProperties;
 
     @Override

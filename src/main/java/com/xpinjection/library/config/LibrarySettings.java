@@ -7,9 +7,8 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Min;
 
-@Getter
-@Setter
 @Validated
+@Getter @Setter
 @ConfigurationProperties(prefix = "library")
 public class LibrarySettings {
     @Min(0)

@@ -14,12 +14,15 @@ import static java.util.Arrays.asList;
 @Data
 @RequiredArgsConstructor
 public class Expert {
-    @NotBlank
+
     @NonNull
+    @NotBlank
     private String name;
-    @NotBlank
+
     @NonNull
+    @NotBlank
     private String contact;
+
     @NotEmpty
     private Set<Recommendation> recommendations = new HashSet<>();
 

@@ -17,6 +17,7 @@ import java.util.Map;
 @Component
 @AllArgsConstructor
 public class DemoRunner implements CommandLineRunner {
+
     private final BookService bookService;
 
     @Override
@@ -24,7 +25,9 @@ public class DemoRunner implements CommandLineRunner {
         Map<String, String> books = new HashMap<>();
         books.put("Spring in Action", "Who knows?");
         books.put("Hibernate in Action", "Who cares?");
+
         LOG.info("Adding default books to the library:");
+
         bookService.addBooks(Books.fromMap(books))
                 .forEach(book -> LOG.info(book.toString()));
     }
