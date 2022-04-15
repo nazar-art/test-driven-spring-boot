@@ -210,7 +210,7 @@
                         <enabled>true</enabled>
                     </layers>
                     <image>
-                        <name>xpinjection.com/library:0.1.0</name>
+                        <name>xpinjection.com/library:0.0.3</name>
                     </image>
                 </configuration>
                 <executions>
