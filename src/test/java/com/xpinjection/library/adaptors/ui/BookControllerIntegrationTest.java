@@ -36,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @WebMvcTest(BookController.class)
 @ExtendWith(SpringExtension.class)
+@Import(FakeManagementConfig.class)
 public class BookControllerIntegrationTest {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.xpinjection.library.adaptors.api;
 
+import com.xpinjection.library.adaptors.FakeManagementConfig;
 import com.xpinjection.library.domain.Expert;
 import com.xpinjection.library.domain.Recommendation;
 import com.xpinjection.library.exception.InvalidRecommendationException;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -36,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
+@Import(FakeManagementConfig.class)
 @WebMvcTest(ExpertRestController.class)
 public class ExpertRestControllerIntegrationTest {
 
