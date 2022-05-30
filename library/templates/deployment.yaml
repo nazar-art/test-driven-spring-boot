@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "library.fullname" . }}
+  labels:
+    {{- include "library.labels" . | nindent 4 }}
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "library.selectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      labels:
+        {{- include "library.selectorLabels" . | nindent 8 }}
+
+    spec:
+      terminationGracePeriodSeconds: 40
+      restartPolicy: Always
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: library-config
+                optional: false
+            - secretRef:
+                name: library-db-credentials
+          env:
+            - name: spring.security.user.password
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: actuator-credentials
+            - name: spring.security.user.name
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: actuator-credentials
+          startupProbe:
+            httpGet:
+              path: {{ .Values.service.liveness.path }}
+              port: 8080
+            timeoutSeconds: {{ .Values.service.liveness.timeoutSeconds }}
+            periodSeconds: 1
+            failureThreshold: {{ .Values.service.startup.waitSeconds }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.service.liveness.path }}
+              port: 8080
+            timeoutSeconds: {{ .Values.service.liveness.timeoutSeconds }}
+            periodSeconds: {{ .Values.service.liveness.periodSeconds }}
+            failureThreshold: {{ .Values.service.liveness.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.service.readiness.path }}
+              port: 8080
+            timeoutSeconds: {{ .Values.service.readiness.timeoutSeconds }}
+            periodSeconds: {{ .Values.service.readiness.periodSeconds }}
+            failureThreshold: {{ .Values.service.readiness.failureThreshold }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}

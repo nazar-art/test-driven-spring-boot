@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: library
+  labels:
+    app: library
+    techstack: springboot
+spec:
+  selector:
+    app: library
+  ports:
+    - port: 8080
+  type: ClusterIP
+#  externalTrafficPolicy: Cluster
+#  internalTrafficPolicy:

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: library-config
+data:
+  SPRING_PROFILES_ACTIVE: dev,admin
+  SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres-postgresql/library'

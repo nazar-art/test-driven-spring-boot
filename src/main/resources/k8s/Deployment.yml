@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: library
+  labels:
+    app: library
+    techstack: springboot
+
+spec:
+  selector:
+    matchLabels:
+      app: library
+  replicas: 1
+
+  template:
+    metadata:
+      name: library
+      labels:
+        app: library
+
+    spec:
+      terminationGracePeriodSeconds: 40
+      containers:
+        - name: 'library'
+          image: lelyak/library:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: library-config
+                optional: false
+            - secretRef:
+                name: library-db-credentials
+          env:
+            - name: spring.security.user.password
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: actuator-credentials
+            - name: spring.security.user.name
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: actuator-credentials
+#          volumeMounts:
+#            - mountPath: '/config'
+#              name: library-config
+#              readOnly: true
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 800m
+              memory: 1024Mi
+          startupProbe:
+            httpGet:
+              path: /admin/health/liveness
+              port: 8080
+            timeoutSeconds: 1
+            periodSeconds: 5
+            failureThreshold: 12
+          livenessProbe:
+            httpGet:
+              path: /admin/health/liveness
+              port: 8080
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /admin/health/readiness
+              port: 8080
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+      restartPolicy: Always
+

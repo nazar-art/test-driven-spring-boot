@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuard
+  labels:
+    app: kuard
+
+spec:
+  selector:
+    matchLabels:
+      app: kuard
+  replicas: 5
+
+# bellow part is info from Pod
+  template:
+    metadata:
+      name: kuard
+      labels:
+        app: kuard
+    spec:
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: "kuard-data"
+          emptyDir: {}
+#        - name: tls-certs
+#          secret:
+#            secretName: kuard-tls
+      containers:
+        - image: gcr.io/kuar-demo/kuard-amd64:1
+          name: kuard
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "10Mi"
+            limits:
+              cpu: "200m"
+              memory: "20Mi"
+#          volumeMounts:
+#            - mountPath: "/data"
+#              name: "kuard-data"
+#            - mountPath: "/tls"
+#              name: "tls-certs"
+#              readOnly: true
+          startupProbe:
+            httpGet:
+              path: /healthy
+              port: 8080
+            timeoutSeconds: 1
+            periodSeconds: 5
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /healthy
+              port: 8080
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+      restartPolicy: Always
