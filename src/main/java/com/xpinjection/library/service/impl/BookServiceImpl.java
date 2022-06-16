@@ -5,6 +5,7 @@ import com.xpinjection.library.domain.Book;
 import com.xpinjection.library.service.BookService;
 import com.xpinjection.library.service.dto.BookDto;
 import com.xpinjection.library.service.dto.Books;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,15 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
     private final BookDao bookDao;
     private final ConcurrentMap<String, List<Book>> cache = new ConcurrentHashMap<>();
 
-    public BookServiceImpl(BookDao bookDao) {
+    /*public BookServiceImpl(BookDao bookDao) {
         this.bookDao = bookDao;
-    }
+    }*/
 
     @Override
     public List<BookDto> addBooks(Books books) {
@@ -52,6 +54,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BookDto> findAllBooks() {
         LOG.info("Finding all books");
         return toDto(bookDao.findAll().stream());
@@ -74,13 +77,6 @@ public class BookServiceImpl implements BookService {
         }
         var lastName = StringUtils.substringAfter(author, firstName);
         return String.join(" ", firstName, lastName);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Book> findAllBooks() {
-        LOG.info("Finding all books");
-        return bookDao.findAll();
     }
 
     private List<BookDto> toDto(Stream<Book> books) {

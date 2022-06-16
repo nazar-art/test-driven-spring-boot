@@ -34,19 +34,6 @@ public class BookControllerIntegrationTest {
     @MockBean
     private BookService bookService;
 
-    private final List<Book> books = asList(
-            new Book("First", "author"),
-            new Book("Second", "another author")
-    );
-
-    @BeforeEach
-    void init() {
-        when(bookService.findAllBooks()).thenReturn(books);
-        webClient = MockMvcWebClientBuilder.mockMvcSetup(mockMvc)
-                .useMockMvcForHosts("books.com", "mylibrary.org")
-        		.build();
-    }
-
     @Test
     void ifBooksExistThenTheyAreRenderedOnTheLibraryPage() throws Exception {
         var books = asList(new BookDto(1L, "First", "author"),

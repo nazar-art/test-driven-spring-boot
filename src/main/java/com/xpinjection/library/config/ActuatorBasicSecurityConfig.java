@@ -9,10 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
-@RequiredArgsConstructor
 public class ActuatorBasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final WebEndpointProperties webEndpointProperties;
+    private WebEndpointProperties webEndpointProperties;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
