@@ -1,7 +1,7 @@
 package com.xpinjection.library.adaptors.api;
 
-import com.xpinjection.library.domain.Books;
 import com.xpinjection.library.service.BookService;
+import com.xpinjection.library.service.dto.Books;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +17,7 @@ public class ExpertApiTest extends AbstractApiTest {
     @Test
     /*@ExportDataSet(format = DataSetFormat.XML, outputName = "target/expert-added.xml",
                 includeTables = {"expert", "recommendations"})*/
-    public void expertCouldBeAddedWithRecommendations() {
+    public void ifExpertHasValidParamsAndRecommendationsThenItIsStored() {
         int id = given()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .body("""

@@ -1,30 +1,18 @@
 package com.xpinjection.library.adaptors.ui;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.xpinjection.library.adaptors.FakeManagementConfig;
-import com.xpinjection.library.domain.Book;
 import com.xpinjection.library.service.BookService;
-import org.junit.jupiter.api.BeforeEach;
+import com.xpinjection.library.service.dto.BookDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
-
-import java.io.IOException;
-import java.util.List;
 
 import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
@@ -38,13 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @WebMvcTest(BookController.class)
 @ExtendWith(SpringExtension.class)
-@Import(FakeManagementConfig.class)
 public class BookControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    private WebClient webClient;
 
     @MockBean
     private BookService bookService;
@@ -63,24 +48,18 @@ public class BookControllerIntegrationTest {
     }
 
     @Test
-    void requestForLibraryIsSuccessfullyProcessedWithAvailableBooksList() throws Exception {
-        this.mockMvc.perform(get("/library.html")
-                .accept(MediaType.parseMediaType("text/html;charset=UTF-8")))
+    void ifBooksExistThenTheyAreRenderedOnTheLibraryPage() throws Exception {
+        var books = asList(new BookDto(1L, "First", "author"),
+                new BookDto(2L, "Second", "another author"));
+        when(bookService.findAllBooks()).thenReturn(books);
+
+        mockMvc.perform(get("/library.html")
+                        .accept(MediaType.parseMediaType("text/html;charset=UTF-8")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.parseMediaType("text/html;charset=UTF-8")))
                 .andExpect(content().string(allOf(
                         containsString("First, <em>author</em>"),
                         containsString("Second, <em>another author</em>")))
                 );
-    }
-
-    @Test
-    void libraryPageContentIsRenderedAsHtmlWithListOfBooks() throws IOException {
-        HtmlPage page = webClient.getPage("http://books.com/library.html");
-        var booksList = page.getElementsByTagName("li").stream()
-                .map(DomNode::asNormalizedText)
-                .collect(toList());
-
-        assertThat(booksList).contains("1. First, author", "2. Second, another author");
     }
 }

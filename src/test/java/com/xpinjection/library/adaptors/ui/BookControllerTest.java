@@ -1,7 +1,7 @@
 package com.xpinjection.library.adaptors.ui;
 
-import com.xpinjection.library.domain.Book;
 import com.xpinjection.library.service.BookService;
+import com.xpinjection.library.service.dto.BookDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,8 +32,8 @@ public class BookControllerTest {
 
     private MockMvc mockMvc;
 
-    private List<Book> books = asList(new Book("First", "author"),
-            new Book("Second", "another author"));
+    private final List<BookDto> books = asList(new BookDto(1L, "First", "author"),
+            new BookDto(2L, "Second", "another author"));
 
     @BeforeEach
     void init() {
@@ -43,14 +43,14 @@ public class BookControllerTest {
     }
 
     @Test
-    void allBooksAreAddedToModelForLibraryView() {
+    void ifBooksExistThenTheyAreAddedToModelForLibraryView() {
         var model = new ExtendedModelMap();
         assertThat(controller.booksPage(model)).isEqualTo("library");
         assertThat(model.asMap()).containsEntry("books", books);
     }
 
     @Test
-    void requestForLibraryIsSuccessfullyProcessedWithAvailableBooksList() throws Exception {
+    void ifBooksExistThenForwardToLibraryViewWithBooksListAsModel() throws Exception {
         this.mockMvc.perform(get("/library.html"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("books", equalTo(books)))

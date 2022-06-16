@@ -1,10 +1,8 @@
-package com.xpinjection.library.domain;
+package com.xpinjection.library.service.dto;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
+import java.util.stream.Stream;
 
 public class Books {
 
@@ -22,9 +20,7 @@ public class Books {
         return new Books(new HashMap<>());
     }
 
-    public List<Book> asList() {
-        return books.entrySet().stream()
-                .map(entry -> new Book(entry.getKey(), entry.getValue()))
-                .collect(toList());
+    public Stream<Map.Entry<String, String>> stream() {
+        return books.entrySet().stream();
     }
 }

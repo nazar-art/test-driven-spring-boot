@@ -1,4 +1,4 @@
-package com.xpinjection.library.domain;
+package com.xpinjection.library.service.dto;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -13,16 +13,13 @@ import static java.util.Arrays.asList;
 
 @Data
 @RequiredArgsConstructor
-public class Expert {
-
-    @NonNull
+public class CreateExpertDto {
     @NotBlank
+    @NonNull
     private String name;
-
-    @NonNull
     @NotBlank
+    @NonNull
     private String contact;
-
     @NotEmpty
     private Set<Recommendation> recommendations = new HashSet<>();
 

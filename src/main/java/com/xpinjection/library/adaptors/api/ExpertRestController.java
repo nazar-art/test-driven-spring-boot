@@ -1,9 +1,10 @@
 package com.xpinjection.library.adaptors.api;
 
-import com.xpinjection.library.adaptors.api.dto.ExpertState;
-import com.xpinjection.library.domain.Expert;
-import com.xpinjection.library.exception.InvalidRecommendationException;
+import com.xpinjection.library.adaptors.api.dto.NewExpert;
 import com.xpinjection.library.service.ExpertService;
+import com.xpinjection.library.service.dto.CreateExpertDto;
+import com.xpinjection.library.service.exception.InvalidRecommendationException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Tag(name = "experts")
 @RestController
 @AllArgsConstructor
 public class ExpertRestController {
@@ -18,9 +20,9 @@ public class ExpertRestController {
     private final ExpertService service;
 
     @PostMapping(path = "/experts", produces = MediaType.APPLICATION_JSON_VALUE)
-    ExpertState addExpert(@RequestBody @Valid Expert expert) {
-        long id = service.add(expert);
-        return new ExpertState(id);
+    NewExpert addExpert(@RequestBody @Valid CreateExpertDto expert) {
+        long id = service.addExpert(expert);
+        return new NewExpert(id);
     }
 
     @ExceptionHandler(InvalidRecommendationException.class)

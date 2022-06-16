@@ -1,8 +1,10 @@
-package com.xpinjection.library.service;
+package com.xpinjection.library.service.impl;
 
 import com.xpinjection.library.adaptors.persistence.BookDao;
 import com.xpinjection.library.domain.Book;
-import com.xpinjection.library.domain.Books;
+import com.xpinjection.library.service.BookService;
+import com.xpinjection.library.service.dto.BookDto;
+import com.xpinjection.library.service.dto.Books;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -31,20 +34,27 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> addBooks(Books books) {
+    public List<BookDto> addBooks(Books books) {
         LOG.info("Adding books: {}", books);
-        return books.asList().stream()
-                .map(bookDao::save)
-                .collect(toList());
+        return toDto(books.stream()
+                .map(entry -> new Book(entry.getKey(), entry.getValue()))
+                .map(bookDao::save));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Book> findBooksByAuthor(String author) {
+    public List<BookDto> findBooksByAuthor(String author) {
         LOG.info("Try to find books by author: {}", author);
         Assert.hasText(author, "Author is empty!");
         var normalizedAuthor = normalizeAuthorName(author);
-        return cache.computeIfAbsent(normalizedAuthor, bookDao::findByAuthor);
+        var books = cache.computeIfAbsent(normalizedAuthor, bookDao::findByAuthor).stream();
+        return toDto(books);
+    }
+
+    @Override
+    public List<BookDto> findAllBooks() {
+        LOG.info("Finding all books");
+        return toDto(bookDao.findAll().stream());
     }
 
     private String normalizeAuthorName(String author) {
@@ -71,5 +81,14 @@ public class BookServiceImpl implements BookService {
     public List<Book> findAllBooks() {
         LOG.info("Finding all books");
         return bookDao.findAll();
+    }
+
+    private List<BookDto> toDto(Stream<Book> books) {
+        return books.map(BookServiceImpl::toDto)
+                .collect(toList());
+    }
+
+    public static BookDto toDto(Book book) {
+        return new BookDto(book.getId(), book.getName(), book.getAuthor());
     }
 }
