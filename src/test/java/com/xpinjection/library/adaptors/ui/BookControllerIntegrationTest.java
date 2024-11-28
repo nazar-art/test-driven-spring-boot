@@ -1,15 +1,17 @@
 package com.xpinjection.library.adaptors.ui;
 
+import com.xpinjection.library.config.ActuatorBasicSecurityConfig;
 import com.xpinjection.library.service.BookService;
 import com.xpinjection.library.service.dto.BookDto;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static java.util.Arrays.asList;
@@ -23,9 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Alimenkou Mikalai
  */
-@ActiveProfiles("test")
 @WebMvcTest(BookController.class)
-@ExtendWith(SpringExtension.class)
+@ActiveProfiles("test")
+@Import(ActuatorBasicSecurityConfig.class)
+@EnableConfigurationProperties(WebEndpointProperties.class)
 public class BookControllerIntegrationTest {
 
     @Autowired

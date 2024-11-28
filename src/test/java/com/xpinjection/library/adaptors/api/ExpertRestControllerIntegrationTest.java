@@ -1,5 +1,6 @@
 package com.xpinjection.library.adaptors.api;
 
+import com.xpinjection.library.config.ActuatorBasicSecurityConfig;
 import com.xpinjection.library.service.ExpertService;
 import com.xpinjection.library.service.dto.CreateExpertDto;
 import com.xpinjection.library.service.dto.Recommendation;
@@ -7,16 +8,17 @@ import com.xpinjection.library.service.exception.InvalidRecommendationException;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -29,9 +31,10 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(ExpertRestController.class)
+@WebMvcTest(value = ExpertRestController.class)
 @ActiveProfiles("test")
+@Import(ActuatorBasicSecurityConfig.class)
+@EnableConfigurationProperties(WebEndpointProperties.class)
 public class ExpertRestControllerIntegrationTest {
     private static final String NAME = "Mikalai";
     private static final String CONTACT = "+38099023546";
@@ -42,7 +45,6 @@ public class ExpertRestControllerIntegrationTest {
 
     @MockBean
     private ExpertService service;
-
 
     @Test
     void ifExpertIsValidThenItIsStored() throws Exception {

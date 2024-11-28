@@ -11,7 +11,14 @@ spring:
     enabled: true
 
 management:
+  tracing:
+    sampling:
+      probability: 1.0
   endpoint:
+    env:
+      show-values: when_authorized
+    shutdown:
+      enabled: true
     health:
       show-details: always
       show-components: always
@@ -20,6 +27,8 @@ management:
       group:
         readiness:
           include: readinessState, db
+    configprops:
+      show-values: when_authorized
   endpoints:
     jmx:
       exposure:
@@ -28,6 +37,7 @@ management:
       base-path: /admin
       exposure:
         include: '*'
+    enabled-by-default: true
   info:
     java:
       enabled: true
@@ -35,3 +45,5 @@ management:
       enabled: true
     git:
       mode: full
+    os:
+      enabled: true

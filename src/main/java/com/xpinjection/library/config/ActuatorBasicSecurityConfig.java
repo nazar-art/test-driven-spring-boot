@@ -1,40 +1,30 @@
 package com.xpinjection.library.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-public class ActuatorBasicSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private WebEndpointProperties webEndpointProperties;
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        var authorizeRequests = http.authorizeRequests();
-        if (webEndpointProperties != null) {
-            authorizeRequests
-                .antMatchers(webEndpointProperties.getBasePath().concat("/health/**")).permitAll()
-                .antMatchers(webEndpointProperties.getBasePath().concat("/**")).hasRole("ADMIN");
-        }
-        authorizeRequests
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .httpBasic()
-                .and()
-            .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-            .csrf()
-                .disable();
-    }
-
-    @Autowired(required = false)
-    public void setWebEndpointProperties(WebEndpointProperties webEndpointProperties) {
-        this.webEndpointProperties = webEndpointProperties;
+@RequiredArgsConstructor
+public class ActuatorBasicSecurityConfig {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http, WebEndpointProperties webEndpointProperties) throws Exception {
+        var actuatorBasePath = webEndpointProperties.getBasePath();
+        return http.authorizeHttpRequests(requests ->
+                        requests.requestMatchers(actuatorBasePath + "/health/**").permitAll()
+                                .requestMatchers(actuatorBasePath + "/**").hasRole("ADMIN")
+                                .requestMatchers("/**").permitAll()
+                                .anyRequest().authenticated())
+            .httpBasic(withDefaults())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .csrf(AbstractHttpConfigurer::disable)
+            .build();
     }
 }

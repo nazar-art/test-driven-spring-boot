@@ -18,9 +18,17 @@ server:
     enabled: true
     min-response-size: 512
     mime-types: text/html,text/xml,text/plain,text/css,application/json
+  ssl:
+    enabled: false
+  http2:
+    enabled: true
   shutdown: graceful
 
 spring:
+  docker:
+    compose:
+      lifecycle-management: none
+      enabled: false
   sql:
     init:
       mode: never
@@ -51,13 +59,11 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         order_inserts: true
         order_updates: true
         batch_versioned_data: true
     open-in-view: false
-  mvc:
-    throw-exception-if-no-handler-found: true
   web:
     resources:
       static-locations: classpath:/static/, classpath:/api/spec/
@@ -68,6 +74,7 @@ library:
   size: 0
 
 logging:
+  include-application-name: false
   file:
     name: library.log
 
@@ -79,3 +86,7 @@ springdoc:
         name: static
       - url: /v3/api-docs.yaml
         name: generated
+
+management:
+  endpoints:
+    enabled-by-default: false

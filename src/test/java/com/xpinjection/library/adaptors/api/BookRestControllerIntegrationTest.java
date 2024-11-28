@@ -2,17 +2,19 @@ package com.xpinjection.library.adaptors.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xpinjection.library.config.ActuatorBasicSecurityConfig;
 import com.xpinjection.library.service.BookService;
 import com.xpinjection.library.service.dto.BookDto;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -27,9 +29,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Alimenkou Mikalai
  */
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(BookRestController.class)
 @ActiveProfiles("test")
+@Import(ActuatorBasicSecurityConfig.class)
+@EnableConfigurationProperties(WebEndpointProperties.class)
 public class BookRestControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
