@@ -28,7 +28,7 @@ public class BookDaoTest extends AbstractDaoTest<BookDao> {
 
         @Test
         @DataSet("books-by-name.xml")
-            //@DataSet(provider = BooksByNameDataSetVerbose.class)
+        //@DataSet(provider = BooksByNameDataSetVerbose.class)
         void ifThereIsOnlyOneBookFoundByNameThenReturnIt() {
             var expected = new Book("First", "Author");
             expected.setId(2L);

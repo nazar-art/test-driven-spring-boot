@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class StandaloneApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private static final PostgreSQLContainer<?> POSTGRE_SQL = new PostgreSQLContainer<>("postgres:11")
+    private static final PostgreSQLContainer<?> POSTGRE_SQL = new PostgreSQLContainer<>("postgres:17.2")
             .withDatabaseName("library")
             .withUsername("test")
             .withPassword("test");

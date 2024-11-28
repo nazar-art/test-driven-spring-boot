@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 public class BookApiTest extends AbstractApiTest {
     @Test

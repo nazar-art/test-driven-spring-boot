@@ -31,9 +31,6 @@ public class BookServiceImpl implements BookService {
     private final BookDao bookDao;
     private final ConcurrentMap<String, List<Book>> cache = new ConcurrentHashMap<>();
 
-    /*public BookServiceImpl(BookDao bookDao) {
-        this.bookDao = bookDao;
-    }*/
 
     @Override
     public List<BookDto> addBooks(Books books) {
