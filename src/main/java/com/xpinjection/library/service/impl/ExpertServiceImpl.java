@@ -49,11 +49,11 @@ public class ExpertServiceImpl implements ExpertService {
 
     private Set<Book> findRecommendedBooks(CreateExpertDto expert) {
         return expert.getRecommendations()
-                    .stream()
-                    .map(this::findBookByRecommendation)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .collect(toSet());
+                .stream()
+                .map(this::findBookByRecommendation)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(toSet());
     }
 
     private Optional<Book> findBookByRecommendation(Recommendation recommendation) {

@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication
 @EnableConfigurationProperties(LibrarySettings.class)
 public class LibraryApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(LibraryApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LibraryApplication.class, args);
+    }
 }

@@ -7,7 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
-@Getter @Setter
+@Getter
+@Setter
 @ConfigurationProperties(prefix = "library")
 public class LibrarySettings {
     @Min(0)

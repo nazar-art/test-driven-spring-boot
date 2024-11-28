@@ -22,9 +22,9 @@ public class ActuatorBasicSecurityConfig {
                                 .requestMatchers(actuatorBasePath + "/**").hasRole("ADMIN")
                                 .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated())
-            .httpBasic(withDefaults())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .csrf(AbstractHttpConfigurer::disable)
-            .build();
+                .httpBasic(withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(AbstractHttpConfigurer::disable)
+                .build();
     }
 }
