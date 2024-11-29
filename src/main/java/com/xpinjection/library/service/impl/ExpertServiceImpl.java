@@ -57,7 +57,7 @@ public class ExpertServiceImpl implements ExpertService {
     }
 
     private Optional<Book> findBookByRecommendation(Recommendation recommendation) {
-        var parts = recommendation.getSentence().split(" by ");
+        var parts = recommendation.sentence().split(" by ");
         return findBookByName(parts[0])
                 .filter(book -> parts.length == 1 ||
                         validateAuthor(parts[1], book));

@@ -23,12 +23,13 @@ public class ExpertApiTest extends AbstractApiTest {
                     {
                       "name": "Mikalai",
                       "contact": "+38099023546",
-                      "recommendations": ["Effective Java by Josh Bloch"]
+                      "recommendations": [{"sentence": "Effective Java by Josh Bloch"}]
                     }""")
         .when()
             .post("/experts")
         .then()
-            .statusCode(HttpStatus.SC_OK)
+//            .statusCode(HttpStatus.SC_OK)
+            .statusCode(HttpStatus.SC_CREATED)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .extract().body().jsonPath().get("id");
 

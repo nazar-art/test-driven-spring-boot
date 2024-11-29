@@ -36,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(ActuatorBasicSecurityConfig.class)
 @EnableConfigurationProperties(WebEndpointProperties.class)
 public class ExpertRestControllerIntegrationTest {
+
     private static final String NAME = "Mikalai";
     private static final String CONTACT = "+38099023546";
     private static final String RECOMMENDATIONS = "Effective Java by Josh Bloch";
@@ -53,7 +54,8 @@ public class ExpertRestControllerIntegrationTest {
         when(service.addExpert(validExpert)).thenReturn(5L);
 
         addExpert(NAME, CONTACT, RECOMMENDATIONS)
-                .andExpect(status().isOk())
+//                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.id").value(5L));
     }
@@ -95,7 +97,7 @@ public class ExpertRestControllerIntegrationTest {
                         {
                           "name": "%s",
                           "contact": "%s",
-                          "recommendations": [%s]
+                          "recommendations": [{"sentence": %s}]
                         }""", name, contact, StringUtils.wrap(recommendations, '\"'))));
     }
 }

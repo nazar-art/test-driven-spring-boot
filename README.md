@@ -10,7 +10,7 @@ The easiest way to run application locally is to use _LocalLibraryApplication_ c
 
 ## Configuration
 
-To enable Actuator endpoints admin profile has to be activated with proper secrets provided via system properties or other suitable external configuration option:
+To enable Actuator endpoints admin profile has to be activated with proper secrets provided via system properties or other suitable external configuration option (VM options):
 
 > _-Dspring.security.user.name=admin -Dspring.security.user.password=xpinjection -Dspring.profiles.active=dev,admin_
 

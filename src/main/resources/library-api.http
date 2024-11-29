@@ -1,0 +1,20 @@
+
+### GET book by author name
+GET localhost:8080/books?author=Who cares?
+
+### POST new expert
+POST localhost:8080/experts
+Content-Type: application/json
+
+{
+  "name": "Denis",
+  "contact": "+380684457044",
+  "recommendations": [
+    {
+      "sentence": "Hibernate in Action by Who cares?"
+    },
+    {
+      "sentence": "Designing Data-Intensive Applications by Martin Kleppmann"
+    }
+  ]
+}
