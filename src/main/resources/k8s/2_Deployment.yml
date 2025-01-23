@@ -5,19 +5,16 @@ metadata:
   labels:
     app: library
     techstack: springboot
-
 spec:
   selector:
     matchLabels:
       app: library
   replicas: 1
-
   template:
     metadata:
       name: library
       labels:
         app: library
-
     spec:
       terminationGracePeriodSeconds: 40
       containers:
@@ -51,28 +48,29 @@ spec:
 #              readOnly: true
           resources:
             requests:
-              cpu: 500m
-              memory: 512Mi
+              cpu: '500m'
+              memory: '512Mi'
             limits:
-              cpu: 500m
-              memory: 512Mi
+              cpu: '500m'
+              memory: '512Mi'
           startupProbe:
+            initialDelaySeconds: 20
             httpGet:
-              path: /admin/health/liveness
+              path: '/admin/health/liveness'
               port: 8080
             timeoutSeconds: 1
             periodSeconds: 5
             failureThreshold: 12
           livenessProbe:
             httpGet:
-              path: /admin/health/liveness
+              path: '/admin/health/liveness'
               port: 8080
             timeoutSeconds: 1
             periodSeconds: 10
             failureThreshold: 3
           readinessProbe:
             httpGet:
-              path: /admin/health/readiness
+              path: '/admin/health/readiness'
               port: 8080
             timeoutSeconds: 1
             periodSeconds: 10
