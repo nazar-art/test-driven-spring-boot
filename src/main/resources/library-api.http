@@ -18,3 +18,22 @@ Content-Type: application/json
     }
   ]
 }
+
+###
+POST localhost:8080/experts
+Content-Type: application/json
+
+{
+  "name": "Mytrofan",
+  "contact": "+380934457044",
+  "recommendations": [
+    {
+      "sentence": "Spring in Action by Who knows?"
+    },
+    {
+      "sentence": "Effective Java by Josua Bloch"
+    }
+  ]
+}
+
+
