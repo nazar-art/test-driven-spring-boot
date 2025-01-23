@@ -54,8 +54,8 @@ spec:
               cpu: 500m
               memory: 512Mi
             limits:
-              cpu: 800m
-              memory: 1024Mi
+              cpu: 500m
+              memory: 512Mi
           startupProbe:
             httpGet:
               path: /admin/health/liveness

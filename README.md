@@ -28,10 +28,18 @@ System properties `pact.provider.version` and `pact.provider.branch` should be u
 
 ---
 
-Execute buildpack image build:
+Run Configuration:
 
-    mvn spring-boot:build-image -Dmaven.test.skip=true
+![Run Configuration](/library-app-run-configuration.png)
+
+Prepare artifact with:
+
+    mvn clean package -Dmaven.test.skip=true
+
+Build image:
+
+    docker build . -t lelyak/library:0.1.0
 
 In case you use k3d cluster - you need to import docker image to the cluster first:
 
-    k3d image import lelyak/boot-admin:0.1.0 -c mycluster
+    k3d image import lelyak/library:0.1.0 -c mycluster

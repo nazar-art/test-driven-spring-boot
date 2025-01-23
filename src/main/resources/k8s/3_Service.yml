@@ -10,6 +10,6 @@ spec:
     app: library
   ports:
     - port: 8080
-  type: ClusterIP
+  type: NodePort
 #  externalTrafficPolicy: Cluster
 #  internalTrafficPolicy:
