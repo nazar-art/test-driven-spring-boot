@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: boot-admin-config
 data:
-  SPRING_PROFILES_ACTIVE: 'k8s'
+  spring.profiles.active: 'k8s'

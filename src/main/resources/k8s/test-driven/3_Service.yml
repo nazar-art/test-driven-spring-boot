@@ -4,12 +4,14 @@ metadata:
   name: library
   labels:
     app: library
-    techstack: springboot
+    tech-stack: springboot
 spec:
   selector:
     app: library
   ports:
     - port: 8080
-  type: NodePort
+#  type: NodePort
+#  type: ClusterIP
+  type: LoadBalancer
 #  externalTrafficPolicy: Cluster
 #  internalTrafficPolicy:
