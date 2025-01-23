@@ -28,18 +28,30 @@ System properties `pact.provider.version` and `pact.provider.branch` should be u
 
 ---
 
-Run Configuration:
+## Run Configuration:
 
 ![Run Configuration](/library-app-run-configuration.png)
+
+### Prepare artifact
 
 Prepare artifact with:
 
     mvn clean package -Dmaven.test.skip=true
 
+### Docker image
+
 Build image:
 
     docker build . -t lelyak/library:0.1.0
 
+### Import image to k3d (if needed) 
+
 In case you use k3d cluster - you need to import docker image to the cluster first:
 
     k3d image import lelyak/library:0.1.0 -c mycluster
+
+## Swagger 
+
+Endpoint is available:
+
+    http://localhost:8080/swagger-ui/index.html
