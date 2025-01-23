@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boot-admin
+  labels:
+    app: boot-admin
+    tech-stack: springboot
+spec:
+  selector:
+    matchLabels:
+      app: boot-admin
+  replicas: 1
+  template:
+    metadata:
+      name: boot-admin
+      labels:
+        app: boot-admin
+    spec:
+      serviceAccountName: boot-admin-account
+      containers:
+        - name: boot-admin
+          image: lelyak/boot-admin:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: boot-admin-config
+            - secretRef:
+                name: boot-admin-auth-credentials
+          env:
+            - name: actuator.password
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: actuator-credentials
+            - name: actuator.username
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: actuator-credentials
+          resources:
+            requests:
+              cpu: '500m'
+              memory: '512Mi'
+            limits:
+              cpu: '500m'
+              memory: '512Mi'
+          startupProbe:
+            httpGet:
+              path: '/admin/health/liveness'
+              port: 8081
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 12
+          livenessProbe:
+            httpGet:
+              path: '/admin/health/liveness'
+              port: 8081
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: '/admin/health/readiness'
+              port: 8081
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+      restartPolicy: Always
+
